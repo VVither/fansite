@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h1>Список объявлений</h1>
+
+    <div class="announcement-grid">
+        {% for announcement in announcements %}
+            <div class="announcement-item">
+                <h3>Автор: {{ announcement.user.username }}</h3>
+                <p>Категория: {{ announcement.get_category_display }}</p>
+                <p>Описание: {{ announcement.text|truncatechars:30 }}</p>
+                <a href="{% url 'announcement_detail' announcement.pk %}">Подробнее</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Fansite</title>
+    </head>
+<body>
+    <header>
+        <div class="header-right">
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Выход</a>
+                <!-- <a href="{% url 'response' %}">отклики</a> -->
+            {% else %}
+                <a href="{% url 'registration' %}">Регистрация</a>
+                <a href="{% url 'login' %}">Вход</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <!-- Здесь будет основной контент страницы -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2023 My Fansite</p>
+    </footer>
+</body>
+</html>
