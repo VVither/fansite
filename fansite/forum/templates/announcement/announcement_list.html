@@ -2,6 +2,12 @@
 
 {% load static %}
 
+<head>
+    <title>Объявления</title>
+    <link rel="stylesheet" href="{% static 'css/announcement_list.css' %}">  
+</head>
+<body>
+
 {% block content %}
     <h1>Список объявлений</h1>
 
@@ -16,3 +22,6 @@
         {% endfor %}
     </div>
 {% endblock %}
+
+</body>
+</html>

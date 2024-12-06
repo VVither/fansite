@@ -1,0 +1,10 @@
+.announcement-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    grid-gap: 10px;
+}
+
+.announcement-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+}

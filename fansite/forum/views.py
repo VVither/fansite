@@ -50,7 +50,7 @@ class AnnouncementDetailView(DetailView):
 class AnnouncementCreateView(CreateView):
     model = Announcement
     form_class = AnnouncementForm
-    template_name = 'announcement/announcement_create.html'
+    template_name = 'announcement/announcement_form.html'
     success_url = reverse_lazy('announcement_list')
 
     def get_context_data(self, **kwargs):
@@ -58,16 +58,37 @@ class AnnouncementCreateView(CreateView):
         context['media_form'] = MediaForm() # Теперь это обычная форма, а не formset
         return context
 
-def post(self, request, *args, **kwargs):
-        self.object = None
-        announcement_form = self.get_form()
+    def form_valid(self, form):
+        announcement = form.save(commit=False)
+        announcement.user = self.request.user  # Важно! Установите пользователя
+        announcement.save()
+        media_form = MediaForm(self.request.POST, self.request.FILES)
+        if media_form.is_valid():
+            media = media_form.save(commit=False)
+            media.save()
+            announcement.media.add(media)
+        return super().form_valid(form)
+        
+class AnnouncementUpdateView(UpdateView):
+    model = Announcement
+    form_class = AnnouncementForm
+    template_name = 'announcement/announcement_form.html'  # один шаблон для создания и редактирования
+    success_url = reverse_lazy('announcement_list')
 
-        if announcement_form.is_valid():
-            announcement = announcement_form.save()
-            for file in request.FILES.getlist('media_file'):  #Обработка списка файлов
-                media = Media(media_file=file, media_type=request.POST.get('media_type')) #Выбор типа файла из request.POST
-                media.save()
-                announcement.media.add(media) #Добавление к объявлению
-            return super().form_valid(announcement_form)
-        else:
-            return self.render_to_response(self.get_context_data(form=announcement_form))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'media_form' not in context:
+          try:
+            context['media_form'] = MediaForm(instance=self.get_object().media.first())
+          except:
+            context['media_form'] = MediaForm()
+        return context
+
+    def form_valid(self, form):
+        announcement = form.save(commit=False)
+        announcement.user = self.request.user # Важно! Установите пользователя
+        announcement.save()
+        media_form = MediaForm(self.request.POST, self.request.FILES, instance=self.get_object().media.first())
+        if media_form.is_valid():
+            media_form.save()
+        return super().form_valid(form)

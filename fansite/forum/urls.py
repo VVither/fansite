@@ -8,8 +8,8 @@ app_name = 'forum'
 
 urlpatterns = [
     path('announcements/', AnnouncementListView.as_view(), name='AnnouncementList'),
-    # path(),
-    # path(),
+    path('announcements/<int:pk>', AnnouncementDetailView.as_view, name = "AnnouncementDetail"),
+    path('announcements/<int:pk>/create', AnnouncementCreateView.as_view, name="AnnouncementCreate"),
     # path(),
     # path(),
 ]
