@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
-{% {% block content %}
+{% block content %}
+    <h1>{{ announcement.title }}</h1>
+    <p>Автор: {{ announcement.user.username }}</p>
+    <p>Категория: {{ announcement.get_category_display }}</p>
+    <p>{{ announcement.text }}</p>
 
-
-
-{% endblock content %}%}
+    {% if announcement.media.all %}
+        <h2>Медиа</h2>
+        {% for media_item in announcement.media.all %}
+            {% if media_item.media_type == 'image' %}
+                <img src="{{ media_item.media_file.url }}" alt="Изображение к объявлению">
+            {% elif media_item.media_type == 'video' %}
+                <video width="320" height="240" controls>
+                    <source src="{{ media_item.media_file.url }}" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

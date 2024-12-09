@@ -10,6 +10,6 @@ urlpatterns = [
     path('announcements/', AnnouncementListView.as_view(), name='AnnouncementList'),
     path('announcements/<int:pk>', AnnouncementDetailView.as_view, name = "AnnouncementDetail"),
     path('announcements/<int:pk>/create', AnnouncementCreateView.as_view, name="AnnouncementCreate"),
-    # path(),
-    # path(),
+    path('', name='My_announcement'),
+    path('', name='My_response'),
 ]

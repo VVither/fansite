@@ -4,7 +4,7 @@
 
 <head>
     <title>Объявления</title>
-    <link rel="stylesheet" href="{% static 'css/announcement_list.css' %}">  
+    <link rel="stylesheet" type='text/css' href="{% static 'css/announcement_list.css' %}"> 
 </head>
 <body>
 
@@ -17,7 +17,7 @@
                 <h3>Автор: {{ announcement.user.username }}</h3>
                 <p>Категория: {{ announcement.get_category_display }}</p>
                 <p>Описание: {{ announcement.text|truncatechars:30 }}</p>
-                <a href="{% url 'announcement_detail' announcement.pk %}">Подробнее</a>
+                <a href="{% url 'forum:AnnouncementDetail' announcement.pk %}">Подробнее</a>
             </div>
         {% endfor %}
     </div>
