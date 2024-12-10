@@ -21,7 +21,7 @@ import allauth.socialaccount.providers.yandex
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR/ 'media'
 MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
@@ -96,7 +96,7 @@ AUTHENTICATION_BACKENDS = (
    # НАСТРОЙКИ АВТОРИЗАЦИИ
 LOGIN_REDIRECT_URL = '//'  # URL, на который пользователи будут перенаправлены после входа
 ACCOUNT_LOGOUT_REDIRECT_URL = '//'  # URL, на который пользователи будут перенаправлены после выхода
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Выберите 'mandatory', если хотите проверку почты
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Выберите 'mandatory', если хотите проверку почты
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_USERNAME_REQUIRED = True

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+<head>
+    <title>Объявления</title>
+</head>
+
+{% block content %}
+    <h1>Мои объявления</h1>
+
+    {% if my_announcements %}
+        <ul>
+            {% for announcement in my_announcements %}
+            <div class="announcement-item">
+                <h3>Автор: {{ announcement.user.username }}</h3>
+                <p>Категория: {{ announcement.get_category_display }}</p>
+                <p>Описание: {{ announcement.text|truncatechars:30 }}</p>
+                <a href="{% url 'forum:AnnouncementDetail' announcement.pk %}">Подробнее</a>
+            </div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет объявлений.</p>
+    {% endif %}
+{% endblock content %}

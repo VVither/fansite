@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 
 class Media(models.Model):
-    media_file = models.FileField(upload_to='announcement_media/', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'mp4', 'mov', 'webm'])])
+    media_file = models.FileField(upload_to='', validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'gif', 'mp4', 'mov', 'webm'])])
     media_type = models.CharField(max_length=50, choices=[('image', 'Изображение'), ('video', 'Видео')], default='image')
         
     def __str__(self):

@@ -3,7 +3,10 @@ from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import (ListView, CreateView, DetailView, UpdateView, DeleteView)
+from django.views.generic import (ListView, CreateView, 
+                                  DetailView, UpdateView, DeleteView)
+from django.contrib.auth.mixins import (LoginRequiredMixin, PermissionRequiredMixin, 
+                                        UserPassesTestMixin)
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.shortcuts import redirect
@@ -92,3 +95,11 @@ class AnnouncementUpdateView(UpdateView):
         if media_form.is_valid():
             media_form.save()
         return super().form_valid(form)
+    
+class MyAnnouncementView(LoginRequiredMixin, ListView):
+    model = Announcement
+    template_name = 'announcement/my_announcements.html'
+    context_object_name = 'my_announcements'
+
+    def get_queryset(self):
+        return Announcement.objects.filter(user=self.request.user).order_by('-created_at')
