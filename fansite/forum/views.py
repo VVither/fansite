@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import (LoginRequiredMixin, PermissionRequiredMi
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.shortcuts import redirect
-from .models import Announcement, Media
+from .models import Announcement, Media, Response
 from .forms import AnnouncementForm, MediaForm
 
 
@@ -103,3 +103,21 @@ class MyAnnouncementView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Announcement.objects.filter(user=self.request.user).order_by('-created_at')
+
+class MyResponse(ListView):
+    model = Response
+    template_name = 'response/response_list.html'
+    context_object_name = 'My_Response'
+
+    def get_queryset(self):
+        return Response.objects.filter(user=self.request.user).order_by('-created_at')
+
+class AnnoucementDeleteView(DeleteView):
+    model = Announcement
+    template_name = 'announcement/announcement_delete.html'
+    success_url = reverse_lazy('forum:AnnouncementList')
+
+    def test_func(self):
+        Announcement = self.get_object()
+        return self.request.user == Announcement.user or self.request.user.is_staff
+    
